@@ -1,0 +1,35 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Aug 27 16:28:24 2018
+
+@author: Martin
+"""
+
+def my_final_grade_calculation(filename):
+    file_pointer = open(filename, 'r')
+    data = file_pointer.readlines()
+    lista_filas=[]
+    for item in data:
+        lista_filas.append((item.replace(' ','')).split(','))
+    dictio={}
+    for alumno in lista_filas:
+        #print(alumno)
+        name=alumno[0].lower()
+        quizes=sorted(alumno[1:7])[-4:]
+        #print(quizes)
+        quizes_nota = (int(quizes[0])+int(quizes[1])+int(quizes[2])+int(quizes[3]))/4
+        assingment=sorted(alumno[7:11])[-3:]
+        #print(assingment)
+        assingment_nota = (int(assingment[0])+int(assingment[1])+int(assingment[2]))/3
+        midterm=int(alumno[-2])
+        final=int(alumno[-1])
+        nota = (quizes_nota+assingment_nota+midterm+final)/4
+        leyenda='fail'
+        if nota>=60:       
+            leyenda ='pass'
+        dictio[name]=leyenda
+    return dictio
+
+
+print(my_final_grade_calculation('notas.txt'))
+          
